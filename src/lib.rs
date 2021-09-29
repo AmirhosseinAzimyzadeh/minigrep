@@ -9,6 +9,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+fn search<'a>(term: &'a str, content: &'a str) -> Vec<&'a str> {
+  vec!["test"]
+}
+
 pub struct Config {
     pub query: String,
     pub filename: String,
@@ -25,4 +29,18 @@ impl Config {
 
         Ok(Config { query, filename })
     }
+}
+
+#[cfg(test)]
+mod test {
+  use super::*;
+
+  #[test]
+  fn one_result() {
+    let test_query = "test";
+    let test_content = "/
+      this is a test sentence
+    ";
+    assert_eq!(vec!["this", "is", "a", "test", "sentence"], search(test_query, test_content))
+  }
 }
